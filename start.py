@@ -16,6 +16,12 @@ DGREY = (75,75,75)
 GREY = (100,100,100)
 WHITE = (255,255,255)
 
+# tile pptys
+SHORT = 100
+NARROW = 100
+TALL = 200
+WIDE = 200
+
 BGCOLOR = BLACK
 FPS = 30
 
@@ -60,21 +66,21 @@ EMPTY_1Y = 400
 EMPTY_2X = 250
 EMPTY_2Y = 400
 
-tiles = [ pygame.Rect((COLM_1X,COLM_1Y,100,200)), 
-          pygame.Rect((BOX_X,BOX_Y,200,200)),
-          pygame.Rect((COLM_2X,COLM_2Y,100,200)),
-          pygame.Rect((COLM_3X,COLM_3Y,100,200)), 
-          pygame.Rect((HORZ_X,HORZ_Y,200,100)),
-          pygame.Rect((COLM_4X,COLM_4Y,100,200)),
-          pygame.Rect((SMBX_2X,SMBX_2Y,100,100)),
-          pygame.Rect((SMBX_3X,SMBX_3Y,100,100)),
-          pygame.Rect((SMBX_1X,SMBX_1Y,100,100)),
-          pygame.Rect((SMBX_4X,SMBX_4Y,100,100)) ]
+tiles = [ pygame.Rect((COLM_1X,COLM_1Y,NARROW,WIDE)), 
+          pygame.Rect((BOX_X,BOX_Y,TALL,WIDE)),
+          pygame.Rect((COLM_2X,COLM_2Y,NARROW,WIDE)),
+          pygame.Rect((COLM_3X,COLM_3Y,NARROW,WIDE)), 
+          pygame.Rect((HORZ_X,HORZ_Y,WIDE,SHORT)),
+          pygame.Rect((COLM_4X,COLM_4Y,NARROW,TALL)),
+          pygame.Rect((SMBX_2X,SMBX_2Y,NARROW,SHORT)),
+          pygame.Rect((SMBX_3X,SMBX_3Y,NARROW,SHORT)),
+          pygame.Rect((SMBX_1X,SMBX_1Y,NARROW,SHORT)),
+          pygame.Rect((SMBX_4X,SMBX_4Y,NARROW,SHORT)) ]
 
 # state of empty tiles
 APART = 0
 TOGETHER_VERT = 1
 TOGETHER_HORZ = 2
 
-emptyTiles = [ pygame.Rect((EMPTY_1X,EMPTY_1Y,100,100)),
-                pygame.Rect((EMPTY_2X,EMPTY_2Y,100,100)) ]
+emptyTiles = [ pygame.Rect((EMPTY_1X,EMPTY_1Y,NARROW,SHORT)),
+                pygame.Rect((EMPTY_2X,EMPTY_2Y,NARROW,SHORT)) ]

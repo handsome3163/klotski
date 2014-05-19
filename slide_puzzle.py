@@ -132,32 +132,30 @@ def move(tile, direction, moveCount):
     if emptyTileIndex == None:
         return None
 
-    if tiles[tileIndex].width == 100 and direction == K_DOWN:
+    if tiles[tileIndex].width == NARROW and direction == K_DOWN:
         temp = tile.top
         tiles[tileIndex].bottom = emptyTiles[emptyTileIndex].bottom
         emptyTiles[emptyTileIndex].top = temp
 
-    elif tiles[tileIndex].width == 100 and direction == K_UP:
+    elif tiles[tileIndex].width == NARROW and direction == K_UP:
         temp = tile.bottom
         tiles[tileIndex].top = emptyTiles[emptyTileIndex].top
         emptyTiles[emptyTileIndex].bottom = temp
 
-    elif tiles[tileIndex].height == 100 and direction == K_RIGHT:
+    elif tiles[tileIndex].height == SHORT and direction == K_RIGHT:
         temp = tile.left
         tiles[tileIndex].right = emptyTiles[emptyTileIndex].right
         emptyTiles[emptyTileIndex].left = temp
 
-    elif tiles[tileIndex].height == 100 and direction == K_LEFT:
+    elif tiles[tileIndex].height == SHORT and direction == K_LEFT:
         temp = tile.right
         tiles[tileIndex].left = emptyTiles[emptyTileIndex].left
         emptyTiles[emptyTileIndex].right = temp
 
-    if tiles[tileIndex].width == 200 and direction == K_DOWN:
-        temp = tile.top
-        tiles[tileIndex].bottom = emptyTiles[1].bottom
-        emptyTiles[0].top = temp
-        emptyTiles[1].top = temp
-
+    elif tiles[tileIndex].width == WIDE and direction == K_DOWN:
+        emptyTiles[0].centery = tiles[tileIndex].centery
+        emptyTiles[1].centery = tiles[tileIndex].centery
+        tiles[tileIndex].bottom = emptyTiles[0].bottom
     
     moveCount += 1
     drawBoard()
