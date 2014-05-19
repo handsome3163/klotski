@@ -71,5 +71,10 @@ tiles = [ pygame.Rect((COLM_1X,COLM_1Y,100,200)),
           pygame.Rect((SMBX_1X,SMBX_1Y,100,100)),
           pygame.Rect((SMBX_4X,SMBX_4Y,100,100)) ]
 
+# state of empty tiles
+APART = 0
+TOGETHER_VERT = 1
+TOGETHER_HORZ = 2
+
 emptyTiles = [ pygame.Rect((EMPTY_1X,EMPTY_1Y,100,100)),
                 pygame.Rect((EMPTY_2X,EMPTY_2Y,100,100)) ]

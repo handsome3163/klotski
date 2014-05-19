@@ -38,47 +38,72 @@ def drawBoard():
     for i in emptyTiles:
         pygame.draw.rect(DS, BLACK, i)
         
+def getEmptyTileState():
+    if abs(emptyTiles[0].centerx - emptyTiles[1].centerx) == 100 and \
+            emptyTiles[0].centery == emptyTiles[1].centery:
+        return TOGETHER_HORZ
+    elif abs(emptyTiles[0].centery - emptyTiles[1].centery) == 100 and \
+            emptyTiles[0].centerx == emptyTiles[1].centerx:
+        return TOGETHER_VERT
+    else:
+        return APART
+
+
 def buildMoveableTileList(moveableTiles):
+
     for i in tiles:
 
         if i.midleft == emptyTiles[0].midright or i.midleft ==  emptyTiles[1].midright:
             moveableTiles.append(i)
 
-        if i.midright == emptyTiles[0].midleft or i.midright == emptyTiles[1].midleft:
+        elif i.midright == emptyTiles[0].midleft or i.midright == emptyTiles[1].midleft:
             moveableTiles.append(i)
 
-        if i.midbottom == emptyTiles[0].midtop or i.midbottom ==  emptyTiles[1].midtop:
+        elif i.midbottom == emptyTiles[0].midtop or i.midbottom ==  emptyTiles[1].midtop:
             moveableTiles.append(i)
 
-        if i.midtop == emptyTiles[0].midbottom or i.midbottom == emptyTiles[1].midbottom:
-            moveableTiles.append(i)
-        
-        if i.midbottom == emptyTiles[0].topright and emptyTiles[1].topleft == i.midbottom:
-            moveableTiles.append(i)
-        if i.midbottom == emptyTiles[1].topright and emptyTiles[0].topleft == i.midbottom:
+        elif i.midtop == emptyTiles[0].midbottom or i.midtop == emptyTiles[1].midbottom:
             moveableTiles.append(i)
 
-        if i.midtop == emptyTiles[0].bottomright and emptyTiles[1].bottomleft == i.midtop:
-            moveableTiles.append(i)
-        if i.midtop == emptyTiles[1].bottomright and emptyTiles[0].bottomleft == i.midtop:
-            moveableTiles.append(i)
-        
-        if i.midleft == emptyTiles[0].topright and emptyTiles[1].bottomright == i.midleft:
-            moveableTiles.append(i)
-        if i.midleft == emptyTiles[1].topright and emptyTiles[0].bottomright == i.midleft:
-            moveableTiles.append(i)
+    empState = getEmptyTileState()
+    
+    if empState == TOGETHER_HORZ:
+        for i in tiles:
+
+            # wide tile on top empties on bottom
+            if i.bottomright == emptyTiles[0].topright and i.bottomleft == emptyTiles[1].topleft:
+                moveableTiles.append(i)
+            elif i.bottomright == emptyTiles[1].topright and i.bottomleft == emptyTiles[0].topleft:
+                moveableTiles.append(i)
+
+            # wide tile on bottom empties on top
+            elif i.topright == emptyTiles[0].bottomright and i.topleft == emptyTiles[1].bottomleft:
+                moveableTiles.append(i)
+            elif i.topright == emptyTiles[1].bottomright and i.topleft == emptyTiles[0].bottomleft:
+                moveableTiles.append(i)
+
+    if empState == TOGETHER_VERT:
+        for i in tiles:
             
-        if i.midright == emptyTiles[0].topleft and emptyTiles[1].bottomleft == i.midright:
-            moveableTiles.append(i)
-        if i.midright == emptyTiles[1].topleft and emptyTiles[0].bottomleft == i.midright:
-            moveableTiles.append(i)
+            # wide tile verticaly right of stacked empties
+            if i.bottomleft == emptyTiles[0].bottomright and i.topleft == emptyTiles[1].topright:
+                moveableTiles.append(i)
+            elif i.bottomleft == emptyTiles[1].bottomright and i.topleft == emptyTiles[0].topright:
+                moveableTiles.append(i)
+
+            # wide tile vertically left of stacked empties 
+            elif i.bottomright == emptyTiles[0].bottomleft and i.topright == emptyTiles[1].topleft:
+                moveableTiles.append(i)
+            elif i.bottomright == emptyTiles[1].bottomleft and i.topright == emptyTiles[0].topleft:
+                moveableTiles.append(i)
 
 
 def getNextMoveableTile(moveableTiles, curTile):
-    if moveableTiles.index(curTile) == len(moveableTiles) - 1:
-        return moveableTiles[0]
+    i = moveableTiles.index(curTile)
+    if i == len(moveableTiles) - 1:
+            return moveableTiles[0]
     else:
-        return moveableTiles[moveableTiles.index(curTile) + 1]
+        return moveableTiles[i + 1]
 
 def findEmptyTileToSwap(tile, direction):
     if direction == K_DOWN:
@@ -127,13 +152,12 @@ def move(tile, direction, moveCount):
         tiles[tileIndex].left = emptyTiles[emptyTileIndex].left
         emptyTiles[emptyTileIndex].right = temp
 
-    elif tiles[tileIndex].width == 200 and direction == K_DOWN:
+    if tiles[tileIndex].width == 200 and direction == K_DOWN:
         temp = tile.top
-        tiles[tileIndex].bottom = emptyTiles[0].bottom
+        tiles[tileIndex].bottom = emptyTiles[1].bottom
         emptyTiles[0].top = temp
         emptyTiles[1].top = temp
-    else:
-        return None
+
     
     moveCount += 1
     drawBoard()
@@ -149,7 +173,7 @@ def main():
     moveableTiles = list()
     buildMoveableTileList(moveableTiles)
     drawText(moveCount, moveableTiles)
-    curTile = tiles[8]
+    curTile = tiles[8]  # bottom left tile seems like a good starting selection
     prevTile = tiles[8]
 
     while 1:
@@ -167,10 +191,11 @@ def main():
                     tempCount = move(curTile, event.key, moveCount)
                     if tempCount == None:
                         continue
+
                     moveCount = tempCount
-                    drawText(moveCount, moveableTiles)    
                     del moveableTiles[:]
                     buildMoveableTileList(moveableTiles)
+                    drawText(moveCount, moveableTiles)
 
         pygame.display.update()
         fpsClock.tick(FPS)
