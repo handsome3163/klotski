@@ -77,7 +77,7 @@ def buildMoveableTileList(moveableTiles):
                 moveableTiles.append(i)
 
             # wide tile on bottom empties on top
-            elif i.topright == emptyTiles[0].bottomright and i.topleft == emptyTiles[1].bottomleft:
+            if i.topright == emptyTiles[0].bottomright and i.topleft == emptyTiles[1].bottomleft:
                 moveableTiles.append(i)
             elif i.topright == emptyTiles[1].bottomright and i.topleft == emptyTiles[0].bottomleft:
                 moveableTiles.append(i)
@@ -85,14 +85,14 @@ def buildMoveableTileList(moveableTiles):
     if empState == TOGETHER_VERT:
         for i in tiles:
             
-            # wide tile verticaly right of stacked empties
+            # Tall tile verticaly right of stacked empties
             if i.bottomleft == emptyTiles[0].bottomright and i.topleft == emptyTiles[1].topright:
                 moveableTiles.append(i)
             elif i.bottomleft == emptyTiles[1].bottomright and i.topleft == emptyTiles[0].topright:
                 moveableTiles.append(i)
 
-            # wide tile vertically left of stacked empties 
-            elif i.bottomright == emptyTiles[0].bottomleft and i.topright == emptyTiles[1].topleft:
+            # Tall tile vertically left of stacked empties 
+            if i.bottomright == emptyTiles[0].bottomleft and i.topright == emptyTiles[1].topleft:
                 moveableTiles.append(i)
             elif i.bottomright == emptyTiles[1].bottomleft and i.topright == emptyTiles[0].topleft:
                 moveableTiles.append(i)
@@ -101,7 +101,7 @@ def buildMoveableTileList(moveableTiles):
 def getNextMoveableTile(moveableTiles, curTile):
     i = moveableTiles.index(curTile)
     if i == len(moveableTiles) - 1:
-            return moveableTiles[0]
+        return moveableTiles[0]
     else:
         return moveableTiles[i + 1]
 
@@ -125,37 +125,41 @@ def findEmptyTileToSwap(tile, direction):
     else:
         return None
     
-def move(tile, direction, moveCount):
+def move(tile, direction, moveCount, f):
     tileIndex = tiles.index(tile)
     emptyTileIndex = findEmptyTileToSwap(tile, direction)
 
     if emptyTileIndex == None:
         return None
 
-    if tiles[tileIndex].width == NARROW and direction == K_DOWN:
-        temp = tile.top
-        tiles[tileIndex].bottom = emptyTiles[emptyTileIndex].bottom
-        emptyTiles[emptyTileIndex].top = temp
+    if direction == K_DOWN:
+
+        if tiles[tileIndex].width == NARROW:
+            f.write("narrow tile down from " + str(tiles[tileIndex]) + NEW_LINE)
+            tiles[tileIndex].bottom = emptyTiles[emptyTileIndex].bottom
+            emptyTiles[emptyTileIndex].bottom = tiles[tileIndex].top
+            f.write("narrow tile to " + str(tiles[tileIndex]) + NEW_LINE)
+
+        # MOVE THE HORIZONTAL TILE DOWN DOESN'T WORK
+        elif tiles[tileIndex].width == WIDE:
+            f.write("horz tile" + str(tiles[tileIndex]) + NEW_LINE)
+            emptyTiles[0].centery = tiles[tileIndex].centery
+            emptyTiles[1].centery = tiles[tileIndex].centery
+            tiles[tileIndex].bottom = emptyTiles[0].bottom
+        else:
+            return None
 
     elif tiles[tileIndex].width == NARROW and direction == K_UP:
-        temp = tile.bottom
         tiles[tileIndex].top = emptyTiles[emptyTileIndex].top
-        emptyTiles[emptyTileIndex].bottom = temp
+        emptyTiles[emptyTileIndex].top = tiles[tileIndex].bottom
 
     elif tiles[tileIndex].height == SHORT and direction == K_RIGHT:
-        temp = tile.left
         tiles[tileIndex].right = emptyTiles[emptyTileIndex].right
-        emptyTiles[emptyTileIndex].left = temp
+        emptyTiles[emptyTileIndex].right = tiles[tileIndex].left
 
     elif tiles[tileIndex].height == SHORT and direction == K_LEFT:
-        temp = tile.right
         tiles[tileIndex].left = emptyTiles[emptyTileIndex].left
-        emptyTiles[emptyTileIndex].right = temp
-
-    elif tiles[tileIndex].width == WIDE and direction == K_DOWN:
-        emptyTiles[0].centery = tiles[tileIndex].centery
-        emptyTiles[1].centery = tiles[tileIndex].centery
-        tiles[tileIndex].bottom = emptyTiles[0].bottom
+        emptyTiles[emptyTileIndex].left = tiles[tileIndex].right
     
     moveCount += 1
     drawBoard()
@@ -173,6 +177,7 @@ def main():
     drawText(moveCount, moveableTiles)
     curTile = tiles[8]  # bottom left tile seems like a good starting selection
     prevTile = tiles[8]
+    f = open('klotski.log', 'a')
 
     while 1:
         for event in pygame.event.get():
@@ -186,7 +191,7 @@ def main():
                     pygame.draw.rect(DS, RED, curTile, 2)
                     prevTile = curTile
                 if event.key in (K_UP, K_DOWN, K_RIGHT, K_LEFT):
-                    tempCount = move(curTile, event.key, moveCount)
+                    tempCount = move(curTile, event.key, moveCount, f)
                     if tempCount == None:
                         continue
 
@@ -197,6 +202,7 @@ def main():
 
         pygame.display.update()
         fpsClock.tick(FPS)
+    f.close()
 
 if __name__ == '__main__':
     main()

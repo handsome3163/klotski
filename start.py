@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 
+NEW_LINE = '\n'
+
 # Game Borders
 LEFT_EDGE = 50
 TOP_EDGE = 0
@@ -22,7 +24,7 @@ NARROW = 100
 TALL = 200
 WIDE = 200
 
-BGCOLOR = BLACK
+BGCOLOR = WHITE
 FPS = 30
 
 ## Starting position of the tiles
