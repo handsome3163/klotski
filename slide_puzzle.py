@@ -12,7 +12,7 @@ fpsClock = pygame.time.Clock()
 
 # set up the window
 DS = pygame.display.set_mode((700, 600), 0, 32)
-pygame.display.set_caption("CIS 27 Spring 2014 Scott Kinney Final")
+pygame.display.set_caption("CIS 27 Spring 2014 Scott Kinney Final ~ Klotski Puzzle")
 
 def drawText(moveCount, moveableTiles):
     fontObj = pygame.font.Font('freesansbold.ttf', 24)
@@ -226,6 +226,34 @@ def move(tile, direction, moveCount, f):
     fpsClock.tick(FPS)
     return moveCount
 
+def isSolved(tile):
+    if tile.size == (200,200) and tile.midbottom == (250,500):
+        return True
+    else:
+        return False
+
+def terminate():
+     pygame.quit()
+     sys.exit()
+
+def checkForQuit():
+    for event in pygame.event.get(QUIT):
+        terminate()
+    for event in pygame.event.get(KEYUP): 
+        if event.key == K_ESCAPE:
+            terminate()
+        pygame.event.post(event)
+
+def solvedMessage(DS):
+    fontObj = pygame.font.Font('freesansbold.ttf', 24)
+    solvedSurfaceObj = fontObj.render('Solved', True, LGREEN, GREY)
+
+    solvedRectObj = solvedSurfaceObj.get_rect()
+    solvedRectObj.center = (250, 450)
+
+    DS.blit(solvedSurfaceObj, solvedRectObj)
+    DS.blit(solvedSurfaceObj, solvedRectObj)
+    
 def main():
     moveCount = 0
     DS.fill(BGCOLOR)
@@ -243,9 +271,11 @@ def main():
     while 1:
         for event in pygame.event.get():
             if event.type == QUIT:
-                f.close()
                 pygame.quit()
                 sys.exit()
+            if isSolved(curTile):
+                solvedMessage(DS)
+                break
             if event.type == KEYUP:
                 if event.key == K_TAB:
                     curTile = getNextMoveableTile(moveableTiles, curTile)
