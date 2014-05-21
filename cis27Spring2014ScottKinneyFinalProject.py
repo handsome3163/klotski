@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+'''
+Program Name: cis27Spring2014ScottKinneyFinalProject.py
+Written By:   Scott Kinney
+Date:         Tue May 20 19:33:30 PDT 2014
+'''
 
 import pygame, sys
 from pygame.locals import *
@@ -234,14 +239,6 @@ def isSolved(tile):
 def terminate():
      pygame.quit()
      sys.exit()
-
-def checkForQuit():
-    for event in pygame.event.get(QUIT):
-        terminate()
-    for event in pygame.event.get(KEYUP): 
-        if event.key == K_ESCAPE:
-            terminate()
-        pygame.event.post(event)
 
 def solvedMessage(DS):
     fontObj = pygame.font.Font('freesansbold.ttf', 24)
