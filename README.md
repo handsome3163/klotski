@@ -7,5 +7,6 @@
 ##### This works on x64 Python 2.7 installation on x64 Linux with the latest Pygame.
 ##### I also confirmed it works on Windows x86 Python 2.7 with [1.9.1 win32](http://pygame.org/download.shtml) Pygame.
 
+### Usage:
 * Tab to cycle through the moveable tiles.
 * Arrow keys to move the selected tile.
