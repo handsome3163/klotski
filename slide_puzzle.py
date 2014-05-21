@@ -21,15 +21,14 @@ def drawText(moveCount, moveableTiles):
     movesRectObj.center = (75,575)
 
     fontObj = pygame.font.Font('freesansbold.ttf', 14)
-    moveableSurfaceObj = fontObj.render('moveableTiles ' + \
-                                            str(len(moveableTiles)), True, LGREEN, BLACK)
+    instrucSurfaceObj = fontObj.render("Tab thru moveable tiles and use arrow to move", True, LGREEN, BLACK)
 
-    moveableRectObj = moveableSurfaceObj.get_rect()
-    moveableRectObj.center = (550,50)
+    instrucRectObj = instrucSurfaceObj.get_rect()
+    instrucRectObj.center = (175,535)
 
     # draw the text to the display surface (DS)
     DS.blit(movesSurfaceObj, movesRectObj)
-    DS.blit(moveableSurfaceObj, moveableRectObj)
+    DS.blit(instrucSurfaceObj, instrucRectObj)
 
 def drawBoard():
     pygame.draw.rect(DS, GREY, (49, 0, 402, 502))
