@@ -5,7 +5,8 @@ Written By:   Scott Kinney
 Date:         Tue May 20 19:33:30 PDT 2014
 '''
 
-import pygame, sys
+import sys, os
+import pygame
 from pygame.locals import *
 
 # The starting state of the board
