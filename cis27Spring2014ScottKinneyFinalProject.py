@@ -16,7 +16,7 @@ pygame.init()
 fpsClock = pygame.time.Clock()
 
 # set up the window
-DS = pygame.display.set_mode((700, 600), 0, 32)
+DS = pygame.display.set_mode((500, 600), 0, 32)
 pygame.display.set_caption("CIS 27 Spring 2014 Scott Kinney Final ~ Klotski Puzzle")
 
 def drawText(moveCount, moveableTiles):
