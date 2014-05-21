@@ -5,4 +5,4 @@
 #### Requires [Pygame] (http://www.pygame.org/download.shtml)
 
 * Tab to cycle through the moveable tiles.
-* Arrow keys to move the tile.
+* Arrow keys to move the selected tile.
