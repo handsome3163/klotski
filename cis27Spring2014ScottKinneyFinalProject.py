@@ -129,38 +129,38 @@ def isValidMove(tile, direction):
     
     if empState == TOGETHER_HORZ and direction == K_DOWN:
             # wide tile on top empties on bottom
-            if tile.bottomright == emptyTiles[0].topright and tile.bottomleft == \
-                    emptyTiles[1].topleft:
+            if tile.bottomright == emptyTiles[0].topright and \
+                    tile.bottomleft == emptyTiles[1].topleft:
                 bool = True
-            elif tile.bottomright == emptyTiles[1].topright and tile.bottomleft == \
-                    emptyTiles[0].topleft:
+            elif tile.bottomright == emptyTiles[1].topright and \
+                    tile.bottomleft == emptyTiles[0].topleft:
                 bool = True
     elif empState == TOGETHER_HORZ and direction == K_UP:
             # wide tile on bottom empties on top
-            if tile.topright == emptyTiles[0].bottomright and tile.topleft == \
-                    emptyTiles[1].bottomleft:
+            if tile.topright == emptyTiles[0].bottomright and \
+                    tile.topleft == emptyTiles[1].bottomleft:
                 bool = True
-            elif tile.topright == emptyTiles[1].bottomright and tile.topleft == \
-                    emptyTiles[0].bottomleft:
+            elif tile.topright == emptyTiles[1].bottomright and \
+                    tile.topleft == emptyTiles[0].bottomleft:
                 bool = True
 
     elif empState == TOGETHER_VERT and direction == K_LEFT:
             
             # Tall tile verticaly right of stacked empties
-            if tile.bottomleft == emptyTiles[0].bottomright and tile.topleft == \
-                    emptyTiles[1].topright:
+            if tile.bottomleft == emptyTiles[0].bottomright and \
+                    tile.topleft == emptyTiles[1].topright:
                 bool = True
-            elif tile.bottomleft == emptyTiles[1].bottomright and tile.topleft == \
-                    emptyTiles[0].topright:
+            elif tile.bottomleft == emptyTiles[1].bottomright and \
+                    tile.topleft == emptyTiles[0].topright:
                 bool = True
 
     elif empState == TOGETHER_VERT and direction == K_RIGHT:
             # Tall tile vertically left of stacked empties 
-            if tile.bottomright == emptyTiles[0].bottomleft and tile.topright == \
-                    emptyTiles[1].topleft:
+            if tile.bottomright == emptyTiles[0].bottomleft and \
+                    tile.topright == emptyTiles[1].topleft:
                 bool = True
-            elif tile.bottomright == emptyTiles[1].bottomleft and tile.topright == \
-                    emptyTiles[0].topleft:
+            elif tile.bottomright == emptyTiles[1].bottomleft and \
+                    tile.topright == emptyTiles[0].topleft:
                 bool = True
     else:
         bool = False
