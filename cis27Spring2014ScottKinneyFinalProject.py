@@ -18,16 +18,19 @@ fpsClock = pygame.time.Clock()
 
 # set up the window
 DS = pygame.display.set_mode((500, 600), 0, 32)
-pygame.display.set_caption("CIS 27 Spring 2014 Scott Kinney Final ~ Klotski Puzzle")
+pygame.display.set_caption\
+    ("CIS 27 Spring 2014 Scott Kinney Final ~ Klotski Puzzle")
 
 def drawText(moveCount, moveableTiles):
     fontObj = pygame.font.Font('freesansbold.ttf', 24)
-    movesSurfaceObj = fontObj.render('Moves: ' + str(moveCount), True, LGREEN, BLACK)
+    movesSurfaceObj = fontObj.render('Moves: ' + str(moveCount), \
+                                         True, LGREEN, BLACK)
     movesRectObj = movesSurfaceObj.get_rect()
     movesRectObj.center = (75,575)
 
     fontObj = pygame.font.Font('freesansbold.ttf', 14)
-    instrucSurfaceObj = fontObj.render("Tab thru moveable tiles and use arrow to move", True, LGREEN, BLACK)
+    instrucSurfaceObj = fontObj.render\
+        ("Tab thru moveable tiles and use arrow to move", True, LGREEN, BLACK)
 
     instrucRectObj = instrucSurfaceObj.get_rect()
     instrucRectObj.center = (175,535)
@@ -56,16 +59,20 @@ def getEmptyTileState():
 
 def buildMoveableTileList(moveableTiles):
     for i in tiles:
-        if i.midleft == emptyTiles[0].midright or i.midleft ==  emptyTiles[1].midright:
+        if i.midleft == emptyTiles[0].midright or i.midleft ==  \
+                emptyTiles[1].midright:
             moveableTiles.append(i)
 
-        elif i.midright == emptyTiles[0].midleft or i.midright == emptyTiles[1].midleft:
+        elif i.midright == emptyTiles[0].midleft or i.midright == \
+                emptyTiles[1].midleft:
             moveableTiles.append(i)
 
-        elif i.midbottom == emptyTiles[0].midtop or i.midbottom ==  emptyTiles[1].midtop:
+        elif i.midbottom == emptyTiles[0].midtop or i.midbottom == \
+                emptyTiles[1].midtop:
             moveableTiles.append(i)
 
-        elif i.midtop == emptyTiles[0].midbottom or i.midtop == emptyTiles[1].midbottom:
+        elif i.midtop == emptyTiles[0].midbottom or i.midtop == \
+                emptyTiles[1].midbottom:
             moveableTiles.append(i)
 
     empState = getEmptyTileState()
@@ -74,30 +81,38 @@ def buildMoveableTileList(moveableTiles):
         for i in tiles:
 
             # wide tile on top empties on bottom
-            if i.bottomright == emptyTiles[0].topright and i.bottomleft == emptyTiles[1].topleft:
+            if i.bottomright == emptyTiles[0].topright and i.bottomleft == \
+                    emptyTiles[1].topleft:
                 moveableTiles.append(i)
-            elif i.bottomright == emptyTiles[1].topright and i.bottomleft == emptyTiles[0].topleft:
+            elif i.bottomright == emptyTiles[1].topright and i.bottomleft == \
+                    emptyTiles[0].topleft:
                 moveableTiles.append(i)
 
             # wide tile on bottom empties on top
-            if i.topright == emptyTiles[0].bottomright and i.topleft == emptyTiles[1].bottomleft:
+            if i.topright == emptyTiles[0].bottomright and i.topleft == \
+                    emptyTiles[1].bottomleft:
                 moveableTiles.append(i)
-            elif i.topright == emptyTiles[1].bottomright and i.topleft == emptyTiles[0].bottomleft:
+            elif i.topright == emptyTiles[1].bottomright and i.topleft == \
+                    emptyTiles[0].bottomleft:
                 moveableTiles.append(i)
 
     if empState == TOGETHER_VERT:
         for i in tiles:
             
             # Tall tile verticaly right of stacked empties
-            if i.bottomleft == emptyTiles[0].bottomright and i.topleft == emptyTiles[1].topright:
+            if i.bottomleft == emptyTiles[0].bottomright and i.topleft == \
+                    emptyTiles[1].topright:
                 moveableTiles.append(i)
-            elif i.bottomleft == emptyTiles[1].bottomright and i.topleft == emptyTiles[0].topright:
+            elif i.bottomleft == emptyTiles[1].bottomright and i.topleft == \
+                    emptyTiles[0].topright:
                 moveableTiles.append(i)
 
             # Tall tile vertically left of stacked empties 
-            if i.bottomright == emptyTiles[0].bottomleft and i.topright == emptyTiles[1].topleft:
+            if i.bottomright == emptyTiles[0].bottomleft and i.topright == \
+                    emptyTiles[1].topleft:
                 moveableTiles.append(i)
-            elif i.bottomright == emptyTiles[1].bottomleft and i.topright == emptyTiles[0].topleft:
+            elif i.bottomright == emptyTiles[1].bottomleft and i.topright == \
+                    emptyTiles[0].topleft:
                 moveableTiles.append(i)
 
 
@@ -114,30 +129,38 @@ def isValidMove(tile, direction):
     
     if empState == TOGETHER_HORZ and direction == K_DOWN:
             # wide tile on top empties on bottom
-            if tile.bottomright == emptyTiles[0].topright and tile.bottomleft == emptyTiles[1].topleft:
+            if tile.bottomright == emptyTiles[0].topright and tile.bottomleft == \
+                    emptyTiles[1].topleft:
                 bool = True
-            elif tile.bottomright == emptyTiles[1].topright and tile.bottomleft == emptyTiles[0].topleft:
+            elif tile.bottomright == emptyTiles[1].topright and tile.bottomleft == \
+                    emptyTiles[0].topleft:
                 bool = True
     elif empState == TOGETHER_HORZ and direction == K_UP:
             # wide tile on bottom empties on top
-            if tile.topright == emptyTiles[0].bottomright and tile.topleft == emptyTiles[1].bottomleft:
+            if tile.topright == emptyTiles[0].bottomright and tile.topleft == \
+                    emptyTiles[1].bottomleft:
                 bool = True
-            elif tile.topright == emptyTiles[1].bottomright and tile.topleft == emptyTiles[0].bottomleft:
+            elif tile.topright == emptyTiles[1].bottomright and tile.topleft == \
+                    emptyTiles[0].bottomleft:
                 bool = True
 
     elif empState == TOGETHER_VERT and direction == K_LEFT:
             
             # Tall tile verticaly right of stacked empties
-            if tile.bottomleft == emptyTiles[0].bottomright and tile.topleft == emptyTiles[1].topright:
+            if tile.bottomleft == emptyTiles[0].bottomright and tile.topleft == \
+                    emptyTiles[1].topright:
                 bool = True
-            elif tile.bottomleft == emptyTiles[1].bottomright and tile.topleft == emptyTiles[0].topright:
+            elif tile.bottomleft == emptyTiles[1].bottomright and tile.topleft == \
+                    emptyTiles[0].topright:
                 bool = True
 
     elif empState == TOGETHER_VERT and direction == K_RIGHT:
             # Tall tile vertically left of stacked empties 
-            if tile.bottomright == emptyTiles[0].bottomleft and tile.topright == emptyTiles[1].topleft:
+            if tile.bottomright == emptyTiles[0].bottomleft and tile.topright == \
+                    emptyTiles[1].topleft:
                 bool = True
-            elif tile.bottomright == emptyTiles[1].bottomleft and tile.topright == emptyTiles[0].topleft:
+            elif tile.bottomright == emptyTiles[1].bottomleft and tile.topright == \
+                    emptyTiles[0].topleft:
                 bool = True
     else:
         bool = False
